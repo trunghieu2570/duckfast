@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "duckfast.web",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/admin",
+      "serviceActions": {
+        "db": "StartWithoutDebugging",
+        "duckfast.web": "StartDebugging"
+      }
+    }
+  }
+}

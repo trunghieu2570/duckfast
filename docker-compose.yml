@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  duckfast.web:
+    image: ${DOCKER_REGISTRY-}duckfastweb
+    build:
+      context: .
+      dockerfile: DuckFast.Web/Dockerfile
+    networks:
+      - postgres
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    networks:
+      - postgres
+    volumes: 
+      - db:/var/lib/postgresql/data
+
+volumes:
+  db:
+    driver: local
+
+networks:
+  postgres:
+    driver: bridge

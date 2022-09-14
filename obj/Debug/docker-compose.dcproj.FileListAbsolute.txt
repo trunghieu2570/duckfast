@@ -1,0 +1,13 @@
+C:\Users\trunghieu\source\repos\DuckFast\bin\Debug\DuckFast.Web.deps.json
+C:\Users\trunghieu\source\repos\DuckFast\bin\Debug\DuckFast.Web.runtimeconfig.json
+C:\Users\trunghieu\source\repos\DuckFast\bin\Debug\appsettings.Development.json
+C:\Users\trunghieu\source\repos\DuckFast\bin\Debug\appsettings.json
+C:\Users\trunghieu\source\repos\DuckFast\bin\Debug\DuckFast.Web.staticwebassets.runtime.json
+C:\Users\trunghieu\source\repos\DuckFast\bin\Debug\DuckFast.Web.exe
+C:\Users\trunghieu\source\repos\DuckFast\bin\Debug\DuckFast.Web.dll
+C:\Users\trunghieu\source\repos\DuckFast\bin\Debug\DuckFast.Web.pdb
+C:\Users\trunghieu\source\repos\DuckFast\obj\Debug\docker-compose.dcproj.AssemblyReference.cache
+C:\Users\trunghieu\source\repos\DuckFast\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
+C:\Users\trunghieu\source\repos\DuckFast\obj\Debug\docker-compose.dcproj.CopyComplete
+C:\Users\trunghieu\source\repos\DuckFast\bin\Debug\libman.json
+C:\Users\trunghieu\source\repos\DuckFast\bin\Debug\bundleconfig.json
