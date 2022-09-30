@@ -3,6 +3,20 @@
 (function () {
     'use strict'
 
+    //$('.relative-datetime').each(function () {
+    //    let data = $(this).attr('data-content');
+    //    if (data) {
+    //        let dateTime = moment.utc(data);
+    //        $(this).text(dateTime.startOf('second').fromNow());
+    //        $(this).attr('title', dateTime.format('lll'));
+    //    }
+    //});
+
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
     feather.replace({ 'aria-hidden': 'true' })
 
     // Graphs

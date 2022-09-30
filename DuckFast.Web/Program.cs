@@ -1,4 +1,10 @@
-using Microsoft.AspNetCore.Authentication.Negotiate;
+using DuckFast.Common.Services;
+using DuckFast.Database;
+using DuckFast.Web.Areas.Admin.Helper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace DuckFast.Web
 {
@@ -10,16 +16,14 @@ namespace DuckFast.Web
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
-            //builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
-            //.AddNegotiate();
-
-            //builder.Services.AddAuthorization(options =>
-            //{
-            //    // By default, all incoming requests will be authorized according to the default policy.
-            //    options.FallbackPolicy = options.DefaultPolicy;
-            //});
             builder.Services.AddRazorPages();
+
+            builder.Services.AddAutoMapper(typeof(MapperProfile));
+            //builder.Services.AddDbContext<DuckFastDataContext>(options => options.UseNpgsql());
+
+            builder.Services.AddScoped<IArticleService, ArticleService>();
+            builder.Services.AddScoped<IUserAccountService, UserAccountService>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
 
             var app = builder.Build();
 

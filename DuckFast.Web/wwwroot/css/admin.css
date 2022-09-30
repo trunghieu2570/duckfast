@@ -159,3 +159,99 @@
 .bg-purple {
     background-color: #6f42c1;
 }
+
+.text-two-lines {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* FANCY TABLE */
+.table-cell-fit {
+    width: 1%;
+    white-space: nowrap;
+}
+table.posts-table {
+    background: #fff;
+}
+
+.posts-table > thead > tr {
+    position: sticky;
+    z-index: 2;
+    top: 0;
+    background: #fff;
+}
+
+    .posts-table > thead > tr > th {
+        border-bottom: 1px solid #e6e9eb;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: .03em;
+        color: #15171a;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .posts-table > tbody > tr {
+        position: relative;
+    }
+
+        .posts-table > tbody > tr > td {
+            vertical-align: middle;
+            padding: 16px 20px;
+            border-top: 1px solid #ebeef0;
+            transition: none !important;
+            font-size: 1rem;
+        }
+
+.posts-table .posts-table-name > p {
+    margin: 0 0 1px;
+    font-size: 0.9rem;
+    overflow-wrap: break-word;
+    color: #626d79;
+}
+
+@media (max-width: 1200px) {
+    .posts-table > thead > tr > th {
+        display: none;
+    }
+
+    .posts-table > tbody > tr {
+        display: flex;
+        flex-wrap: wrap;
+        border-bottom: 1px solid #ebeef0;
+        margin: 0;
+    }
+
+    .posts-table .posts-table-name {
+        display: block;
+        /*order: 2;*/
+        flex: 1 1 100%;
+        border: none;
+        padding: 20px 28px 4px 0px;
+    }
+
+    .posts-table .posts-table-checker {
+        display: none;
+    }
+
+    .posts-table .posts-table-status {
+        display: inline-block;
+        border: none;
+        padding: 0 4px 20px 0;
+        font-size: 0.9rem;
+        max-width: 140px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.entry-meta {
+    font-size: 0.9rem;
+    color: #abb4be;
+}

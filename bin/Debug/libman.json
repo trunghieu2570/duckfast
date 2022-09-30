@@ -69,6 +69,13 @@
         "fonts/ionicons.ttf",
         "fonts/ionicons.woff"
       ]
+    },
+    {
+      "library": "moment.js@2.29.4",
+      "destination": "wwwroot/lib/moment.js/",
+      "files": [
+        "moment.min.js"
+      ]
     }
   ]
 }

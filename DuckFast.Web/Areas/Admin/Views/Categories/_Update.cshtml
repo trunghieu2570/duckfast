@@ -1,0 +1,38 @@
+﻿@model CategoryModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var sectionLabel = "Edit Category";
+    var actionLabel = "Save";
+    var action = "Update";
+    @if (Model.Id == 0)
+    {
+        sectionLabel = "Add New Category";
+        actionLabel = "Add";
+        action = "Add";
+    }
+
+    @using (Html.BeginForm(action, "Categories", FormMethod.Post))
+    {
+        <fieldset>
+            <legend class="fw-bold">@Html.DisplayFor(x => sectionLabel)</legend>
+            @Html.Hidden("Id", Model.Id)
+            <div class="mb-3">
+                <label for="inputName" class="form-label">Name</label>
+                @Html.TextBoxFor(x => Model.Name, new { @id = "inputName", @class = "form-control" })
+                @Html.ValidationMessageFor(x => Model.Name, "", new { @class = "invalid-feedback " })
+            </div>
+            <div class="mb-3">
+                <label for="inputSlug" class="form-label">Slug</label>
+                @Html.TextBoxFor(x => Model.Slug, new { @id = "inputSlug", @class = "form-control" })
+                @Html.ValidationMessageFor(x => Model.Slug, "", new { @class = "invalid-feedback " })
+            </div>
+            <div class="mb-3">
+                <label for="inputDescription" class="form-label">Description</label>
+                @Html.TextBoxFor(x => Model.Description, new { @id = "inputDescription", @class = "form-control" })
+            </div>
+            <button type="submit" class="btn btn-primary">@Html.DisplayFor(x => actionLabel)</button>
+        </fieldset>
+    }
+}

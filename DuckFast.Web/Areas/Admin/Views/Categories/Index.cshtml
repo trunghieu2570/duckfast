@@ -1,0 +1,96 @@
+﻿@model CategoriesListViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    @Html.AntiForgeryToken()
+    <div class="col-md-9 ms-sm-auto col-lg-10 px-0">
+        <div class="nav-scroller bg-white shadow-sm">
+            <nav class="nav nav-underline" aria-label="Secondary navigation">
+                <a class="nav-link active" aria-current="page" href="#">Categories</a>
+                <a class="nav-link" href="#">
+                    My categories
+                    <span class="badge bg-light text-dark rounded-pill align-text-bottom">27</span>
+                </a>
+                <a class="nav-link" href="#">Published</a>
+                <a class="nav-link" href="#">Drafts</a>
+            </nav>
+        </div>
+
+        <main class="container-fluid">
+            <div class="row">
+                <div class="col-xl-9">
+                    <div class="my-3 p-3 bg-white rounded shadow-sm">
+
+                        @using (Html.BeginForm(FormMethod.Get, new { @class = "row g-3" }))
+                        {
+                            <div class="col-auto">
+                                <label for="inputSearch" class="visually-hidden">Search</label>
+                                @Html.TextBoxFor(x => Model.Search, "text", new { @class = "form-control form-control-sm", @id = "inputSearch", @placeholder = "Filter by name..."})
+                            </div>
+
+                            <div class="ms-md-auto col-auto">
+                                <label for="inputSelectSort" class="visually-hidden">Sort by</label>
+                                <select name="sort" class="form-select form-select-sm" id="inputSelectSort" aria-label=".form-select-sm example">
+                                    <option value="newest" selected>Sort by Newest</option>
+                                    <option value="name">Sort by Name</option>
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-sm btn-outline-dark mb-3">Find</button>
+                            </div>
+                        }
+
+                        <table class="table">
+                            <thead>
+                                <tr class="border-top">
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Slug</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model.Categories!)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(x => item.Name)
+                                        </td>
+                                        <td>@Html.DisplayFor(x => item.Slug)</td>
+                                        <td>@Html.DisplayFor(x => item.Description)</td>
+                                        <td>@Html.ActionLink("Edit", "Index", "Categories", new { selectedCategory = item.Id })</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        <small class="d-block text-end mt-3">
+                            <a href="#">All updates</a>
+                        </small>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="my-3 p-4 bg-white rounded shadow-sm">
+                        @{ await Html.RenderPartialAsync("_Update", Model.CurrentCategory); }
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+}
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    <script type="text/javascript">
+        var settings = {
+            validClass: "is-valid",
+            errorClass: "is-invalid"
+
+        };
+        $.validator.setDefaults(settings);
+        $.validator.unobtrusive.options = settings;
+        </script>
+}

@@ -1,0 +1,94 @@
+﻿@using System.Web
+@model ArticleEditViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    <div class="col-md-9 ms-sm-auto col-lg-10 px-0">
+        <div class="nav-scroller bg-white shadow-sm">
+            <nav class="nav nav-underline" aria-label="Secondary navigation">
+                <a class="nav-link active" aria-current="page" href="#">Editor</a>
+                <a class="nav-link" href="#">
+                    Friends
+                    <span class="badge bg-light text-dark rounded-pill align-text-bottom">27</span>
+                </a>
+                <a class="nav-link" href="#">Explore</a>
+                <a class="nav-link" href="#">Suggestions</a>
+            </nav>
+        </div>
+        <main class="container-fluid px-0 px-md-4">
+            @using (Html.BeginForm())
+            {
+                <div class="row">
+                    <div class="col-xl-9">
+                        <div class="my-3 p-3 bg-white rounded shadow-sm overflow-auto">
+                            <div class="editor mx-auto" style="max-width: 740px">
+                                @Html.Raw(HttpUtility.HtmlDecode(Model.Content))
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="my-3 p-4 bg-white rounded shadow-sm">
+                            <fieldset>
+                                <legend class="fw-bold">Article Settings</legend>
+                                <div class="mb-3">
+                                    <label for="inputSlug" class="form-label">Post Url</label>
+                                    @Html.TextBoxFor(x => Model.Slug, new { @id = "inputSlug", @class = "form-control" })
+                                </div>
+                                <div class="mb-3">
+                                    <label for="selectCategory" class="form-label">Category</label>
+                                    @Html.DropDownListFor(x => Model.Category, Model.SelectListCategory, "Uncategorized", new { @id = "selectCategory", @class = "form-select", @label = "Select Category" })
+                                </div>
+                                <div class="mb-3">
+                                    <label for="selectAuthor" class="form-label">Author</label>
+                                    @Html.DropDownListFor(x => Model.Author, Model.SelectListAuthor, "No Author", new { @id = "selectAuthor", @class = "form-select", @label = "Select Author" })
+                                </div>
+                                <div class="mb-3">
+                                    <label for="inputExcerpt" class="form-label">Excerpt</label>
+                                    @Html.TextAreaFor(x => Model.Excerpt, new { @id = "inputExcerpt", @class = "form-control" })
+                                </div>
+                                <button type="submit" class="btn btn-primary">Publish</button>
+                            </fieldset>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+        </main>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/lib/ckeditor5/build/ckeditor.js"></script>
+    <script type="text/javascript">
+        (function () {
+            'use strict'
+        })()
+
+        BalloonBlockEditor
+            .create(document.querySelector('.editor'), {
+                licenseKey: '',
+                title: {
+                    placeholder: 'Post title'
+                },
+                placeholder: 'Begin writting your post...'
+            })
+            .then(editor => {
+                window.editor = editor;
+            })
+            .catch(error => {
+                console.error('Oops, something went wrong!');
+                console.error('Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:');
+                console.warn('Build id: 86ke3fbqsz7d-s6hal3r3f6i2');
+                console.error(error);
+            });
+
+        document.querySelector('#submit').addEventListener('click', () => {
+            const editorData = window.editor.getData();
+            console.log(editorData)
+            // ...
+        });
+    </script>
+}
