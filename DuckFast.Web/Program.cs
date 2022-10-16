@@ -1,10 +1,9 @@
 using DuckFast.Common.Services;
 using DuckFast.Database;
 using DuckFast.Web.Areas.Admin.Helper;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Identity;
+using DuckFast.Database.Entities;
 
 namespace DuckFast.Web
 {
@@ -19,11 +18,20 @@ namespace DuckFast.Web
             builder.Services.AddRazorPages();
 
             builder.Services.AddAutoMapper(typeof(MapperProfile));
-            //builder.Services.AddDbContext<DuckFastDataContext>(options => options.UseNpgsql());
+            builder.Services.AddDbContext<DuckFastDataContext>(options => options.UseNpgsql());
+            builder.Services.AddDefaultIdentity<UserAccount>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<DuckFastDataContext>();
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("SelfManagePolicy", policy => policy.RequireAuthenticatedUser());
+
+            });
 
             builder.Services.AddScoped<IArticleService, ArticleService>();
             builder.Services.AddScoped<IUserAccountService, UserAccountService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+            builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
             var app = builder.Build();
 
@@ -49,6 +57,7 @@ namespace DuckFast.Web
                   name: "areas",
                   pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                 );
+                endpoints.MapRazorPages();
             });
 
             app.MapControllerRoute(

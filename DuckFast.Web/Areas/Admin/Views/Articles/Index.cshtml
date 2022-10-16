@@ -23,7 +23,7 @@
                 {
                     <div class="col-auto">
                         <label for="inputSearch" class="visually-hidden">Search</label>
-                        @Html.TextBoxFor(x => Model.Search, "text", new { @class = "form-control form-control-sm", @id = "inputSearch", @placeholder = "Filter by article title..."})
+                        @Html.TextBoxFor(x => Model.Search, "text", new { name = "search", @class = "form-control form-control-sm", @id = "inputSearch", @placeholder = "Filter by article title..."})
                     </div>
                     <div class="col-auto">
                         <label for="inputSelectCategory" class="visually-hidden">Category</label>

@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
 using DuckFast.Common.Services;
+using DuckFast.Database.Entities;
 using DuckFast.Web.Areas.Admin.Helper;
 using DuckFast.Web.Areas.Admin.Models;
 using DuckFast.Web.Areas.Admin.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DuckFast.Web.Areas.Admin.Controllers
 {
+    [Authorize]
     [Area("Admin")]
     public class ArticlesController : Controller
     {
@@ -28,12 +31,13 @@ namespace DuckFast.Web.Areas.Admin.Controllers
             _categoryService = categoryService;
         }
 
-        public async Task<IActionResult> Index(string search, int category, Guid? author, string status, string sort)
+        public async Task<IActionResult> Index(string search, int category, string author, string status, string sort)
         {
             var articles = await _articleService.GetArticles();
             var users = await _userAccountService.GetUserAccounts();
+            var categories = await _categoryService.GetCategories();
 
-            if (author.HasValue)
+            if (author != null)
                 articles = articles.Where(x => x.Author!.Id == author);
             
             if (!string.IsNullOrEmpty(search))
@@ -43,12 +47,7 @@ namespace DuckFast.Web.Areas.Admin.Controllers
             {
                 Articles = _mapper.Map<IEnumerable<ArticleModel>>(articles),
                 SelectListAuthor = new SelectList(users.ToSelectList(x => x.DisplayName, x => x.Id), "Value", "Text"),
-                SelectListCategory = new SelectList(new List<SelectListItem>
-                {
-                    new SelectListItem { Text = "Technology", Value = "1" },
-                    new SelectListItem { Text = "Business", Value = "2" },
-                    new SelectListItem { Text = "Family", Value = "3" },
-                }, "Value", "Text"),
+                SelectListCategory = new SelectList(categories.ToSelectList(x => x.Name, x => x.Id), "Value", "Text"),
                 Search = search,
                 Category = category,
                 Author = author,
@@ -66,13 +65,30 @@ namespace DuckFast.Web.Areas.Admin.Controllers
             var article = await _articleService.GetArticle(id);
             var editModel = new ArticleEditViewModel
             {
+                Id = id,
                 SelectListAuthor = new SelectList(users.ToSelectList(x => x.DisplayName, x => x.Id), "Value", "Text"),
                 SelectListCategory = new SelectList(categories.ToSelectList(x => x.Name, x => x.Id), "Value", "Text"),
                 Author = article!.Author!.Id,
                 Category = article!.Category?.Id ?? 0,
-                Content = String.Format("<h2>{0}</h2>{1}", article!.Title, article!.Content),
+                PrevContent = string.Format("<h2>{0}</h2>{1}", article!.Title, article!.Content),
+                Excerpt = article!.Excerpt,
+                Slug = article!.Slug,
+                Status = article!.Status,
             };
             return View(editModel!);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit([FromForm] ArticleRequestModel articleModel)
+        {
+            var article = _mapper.Map<Article>(articleModel);
+
+            article.Category = await _categoryService.GetCategory(articleModel.Category);
+            article.Author = await _userAccountService.GetUserAccount(articleModel.Author!);
+
+            await _articleService.UpdateArticle(article);
+
+            return RedirectToAction("Edit", new { @id = article.Id });
         }
     }
 }

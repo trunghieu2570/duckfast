@@ -50,8 +50,9 @@ namespace DuckFast.Common.Services
 
         public async Task<Category> UpdateCategory(Category category)
         {
-            if (await _context.Categories!.SingleOrDefaultAsync(c => c.Id == category.Id) == null) 
+            if (!await _context.Categories!.AnyAsync(c => c.Id == category.Id)) 
                 return null!;
+
             _context.Categories!.Update(category);
             await _context.SaveChangesAsync();
             return category;

@@ -255,3 +255,8 @@ table.posts-table {
     font-size: 0.9rem;
     color: #abb4be;
 }
+
+.sticky-option {
+    position: sticky;
+    top: 64px;
+}

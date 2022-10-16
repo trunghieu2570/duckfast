@@ -4,9 +4,11 @@ using DuckFast.Database.Entities;
 using DuckFast.Web.Areas.Admin.Models.ViewModels;
 using DuckFast.Web.Areas.Admin.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DuckFast.Web.Areas.Admin.Controllers
 {
+    [Authorize]
     [Area("Admin")]
     public class CategoriesController : Controller
     {

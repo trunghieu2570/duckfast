@@ -76,6 +76,15 @@
       "files": [
         "moment.min.js"
       ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "highlight.js@11.6.0",
+      "destination": "wwwroot/lib/highlight.js/",
+      "files": [
+        "highlight.min.js",
+        "styles/default.min.css"
+      ]
     }
   ]
 }

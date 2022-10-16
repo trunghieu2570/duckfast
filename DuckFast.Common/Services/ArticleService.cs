@@ -38,7 +38,10 @@ namespace DuckFast.Common.Services
 
         public async Task<Article?> GetArticle(int id)
         {
-            return await _context.Articles!.SingleOrDefaultAsync(x => x.Id == id);
+            return await _context.Articles!
+                .Include(x => x.Author)
+                .Include(x => x.Category)
+                .SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IEnumerable<Article>> GetArticles()
@@ -49,9 +52,16 @@ namespace DuckFast.Common.Services
                 .ToListAsync();
         }
 
-        public Task<Article> UpdateArticle(Article article)
+        public async Task<Article> UpdateArticle(Article article)
         {
-            throw new NotImplementedException();
+            if (!await _context.Articles!.AnyAsync(c => c.Id == article.Id))
+                return null!;
+
+            article.UpdatedDate = DateTime.UtcNow;
+
+            _context.Articles!.Update(article);
+            await _context.SaveChangesAsync();
+            return article;
         }
     }
 }

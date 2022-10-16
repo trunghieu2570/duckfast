@@ -12,9 +12,9 @@ namespace DuckFast.Common.Services
     public interface IUserAccountService
     {
         public Task<IEnumerable<UserAccount>> GetUserAccounts();
-        public Task<UserAccount?> GetUserAccount(Guid id);
+        public Task<UserAccount?> GetUserAccount(string id);
         public Task<UserAccount> AddUserAccount(UserAccount UserAccount);
-        public Task DeleteUserAccount(Guid id);
+        public Task DeleteUserAccount(string id);
         public Task<UserAccount> UpdateUserAccount(UserAccount UserAccount);
     }
     public class UserAccountService : IUserAccountService
@@ -31,12 +31,12 @@ namespace DuckFast.Common.Services
             throw new NotImplementedException();
         }
 
-        public Task DeleteUserAccount(Guid id)
+        public Task DeleteUserAccount(string id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<UserAccount?> GetUserAccount(Guid id)
+        public async Task<UserAccount?> GetUserAccount(string id)
         {
             return await _context.UserAccounts!.SingleOrDefaultAsync(x => x.Id == id);
         }

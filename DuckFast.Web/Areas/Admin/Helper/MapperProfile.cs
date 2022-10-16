@@ -12,6 +12,9 @@ namespace DuckFast.Web.Areas.Admin.Helper
             CreateMap<UserAccount, UserModel>();
             CreateMap<Category, CategoryModel>();
             CreateMap<CategoryModel, Category>();
+            CreateMap<ArticleRequestModel, Article>()
+                .ForMember(x => x.Author, opt => opt.Ignore())
+                .ForMember(x => x.Category, opt => opt.Ignore());
         }
     }
 }
